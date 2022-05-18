@@ -3,7 +3,10 @@ package todolist.devdojo.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import todolist.devdojo.Models.User;
@@ -20,9 +23,13 @@ public class UserController {
     private final DateUtil dateUtil;
     private final UserService userService;
     @GetMapping
-    public List<User> list(){
-        return userService.listAll();
-
+    public ResponseEntity<List<User >> list(){
+        return ResponseEntity.ok(userService.listAll());
     }
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<User> getById(@PathVariable long id){
+        return ResponseEntity.ok(userService.getById(id));
+    }
+
 
 }
